@@ -34,12 +34,12 @@ void loop() {
   lcd.setCursor(0,0);
   lcd.print("Distance:");
   lcd.setCursor(0,1);
-  zakres(0, 30); 
+  range(0, 30); 
   delay(50);
 }
 
-int zmierzOdleglosc() {
-  long czas, dystans;
+int measureDistance() {
+  long time, distance;
  
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
@@ -47,24 +47,24 @@ int zmierzOdleglosc() {
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
  
-  czas = pulseIn(echoPin, HIGH);
-  dystans = czas / 58;
+  time = pulseIn(echoPin, HIGH);
+  distance = time / 58;
  
-  return dystans;
+  return distance;
 }
 
-void zakres(int a, int b) {
-  int jakDaleko = zmierzOdleglosc();
-  if ((jakDaleko > a) && (jakDaleko < b)) {
+void range(int a, int b) {
+  int howFar = measureDistance();
+  if ((howFar > a) && (howFar < b)) {
       digitalWrite(greenLedPin, LOW);
       digitalWrite(buzzerPin, HIGH); 
       digitalWrite(redLedPin, HIGH);
-      lcd.print(jakDaleko);
+      lcd.print(howFar);
   } else {
       digitalWrite(buzzerPin, LOW); 
       digitalWrite(redLedPin, LOW);
       digitalWrite(greenLedPin, HIGH);
-      lcd.print(jakDaleko);
+      lcd.print(howFar);
   }
 }
   
